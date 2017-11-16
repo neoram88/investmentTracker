@@ -16,7 +16,7 @@ export class DataService {
   }
 
   createAuthorizationHeader(headers: Headers) {
-    headers.append("X-Mashape-Key", "h2vhUH1P7nmshA652c2fDKq9O4Svp1BroDQjsn0KvqaLt0wnIC");
+    headers.append("X-Mashape-Key", "2WtgNSU4LAmshsC4BJ4KPdajsgH7p1P2L33jsngUvKHQmjJFaP");
   }
 
   getFundHouses() {
@@ -41,6 +41,24 @@ export class DataService {
         let headers = new Headers();
         this.createAuthorizationHeader(headers);
         let fund= this.http.get(`https://mitanjos-india-mutual-fund-nav-prices-v1.p.mashape.com/list/fundHouses/fundType/${fundType}`,{
+          headers: headers
+        });
+        return fund;
+  }
+
+  getFundsList(fundType,fundHouse) {
+        let headers = new Headers();
+        this.createAuthorizationHeader(headers);
+        let fund= this.http.get(`https://mitanjos-india-mutual-fund-nav-prices-v1.p.mashape.com/list/funds/fundHouse/${fundHouse}/fundType/${fundType}`,{
+          headers: headers
+        });
+        return fund;
+  }
+
+  getFundDetails(schemeCode) {
+        let headers = new Headers();
+        this.createAuthorizationHeader(headers);
+        let fund= this.http.get(`https://mitanjos-india-mutual-fund-nav-prices-v1.p.mashape.com/quote/schemeCode/${schemeCode}`,{
           headers: headers
         });
         return fund;

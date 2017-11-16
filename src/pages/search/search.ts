@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { DataService } from '../../providers/data-service';
 
 import { NavController } from 'ionic-angular';
+import { FundDetailsPage } from '../fund-details/fund-details'; 
+import {TabsPage} from '../tabs/tabs'
 
 @Component({
   selector: 'page-search',
@@ -12,17 +14,17 @@ export class SearchPage {
 
   public fundHouses;
   public fundTypes;
-  public items;
+  public funds;
   public fundDetails;
   public selectedFundHouses;
   public selectedFundTypes;
 
-  constructor(public navCtrl: NavController, private dataService: DataService,) {
+  constructor(public navCtrl: NavController, private dataService: DataService) {
 
   }
 
   ionViewDidLoad() {
-    this.getFundHouses();
+    //this.getFundHouses();
     this.getFundTypes();
   }
 
@@ -47,7 +49,7 @@ export class SearchPage {
   }
 
   getFundHousesforFundType(fundType){
-    this.dataService.getFundbyTypes(fundType).subscribe(
+    this.dataService.getFundbyTypes(fundType.trim()).subscribe(
       data => {
                this.fundHouses=data.json().data;
            },
@@ -56,23 +58,21 @@ export class SearchPage {
     )
   }
 
-  getFundbyHouse(fundHouse){
-    this.dataService.getFundbyTypes(fundHouse).subscribe(
+  getFundsList(fundType,fundHouse){
+    this.dataService.getFundsList(fundType.trim(),fundHouse.trim()).subscribe(
       data => {
-               this.items=data.json().data;
+               this.funds=data.json().data;
            },
            err => console.error(err),
-           () => console.log('getFundbyNames completed')
+           () => console.log('getFundsList completed')
     )
   }
 
-  loadSearchData(searchBy){
-    if(searchBy=='fundtype'){
-      this.items=this.fundTypes;
-    }else if(searchBy=='fundhouse'){
-      this.items=this.fundHouses;
-    }
+  showfundDetails(schemeCode){
+    //this.navCtrl.setRoot(FundDetailsPage);
+    this.navCtrl.push(FundDetailsPage, { schemeCode: schemeCode });
   }
+
 
   // itemSelected(item,searchBy){
   //   if(searchBy=='fundtype'){

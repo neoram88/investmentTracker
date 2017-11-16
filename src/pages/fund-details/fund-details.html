@@ -1,0 +1,20 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Fund Details</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content *ngIf="funds.length>0">
+
+    <ion-card>
+        <!--<img src="img/card-saopaolo.png" />-->
+        <div class="card-title">{{funds[0].fundHouse}}</div>
+        <div class="card-subtitle">{{funds[0].fundType}}</div>
+        <div class="card-subtitle">{{funds[0].schmName}}</div>
+        <div class="card-subtitle"> {{funds[0].navVal}}</div>
+    </ion-card>
+
+</ion-content>

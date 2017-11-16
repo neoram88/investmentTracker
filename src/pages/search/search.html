@@ -6,48 +6,53 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content >
-  <ion-toolbar>
-    <span >Select atleast one fund type and a fund house</span>
-    <ion-chip #chipFundType1 *ngIf="selectedFundType">
-      <ion-label >{{selectedFundType}}</ion-label>
-      <button ion-button clear color="dark" (click)="clearFundType()">
+<ion-content>
+    <ion-toolbar>
+        <span>Select atleast one fund type and a fund house</span>
+        <ion-chip #chipFundType1 *ngIf="selectedFundType">
+            <ion-label>{{selectedFundType}}</ion-label>
+            <button ion-button clear color="dark" (click)="clearFundType()">
         <ion-icon name="close-circle"></ion-icon>
       </button>
-    </ion-chip>
+        </ion-chip>
 
-    <ion-chip *ngFor="let filter of selectedFundHouses; let i = index" #elem [attr.id]="'chipFundHouse' + i" >
-      <ion-label>{{filter}}</ion-label>
-      <button ion-button clear color="dark" (click)="delete(elem)">
+        <ion-chip *ngFor="let filter of selectedFundHouses; let i = index" #elem [attr.id]="'chipFundHouse' + i">
+            <ion-label>{{filter}}</ion-label>
+            <button ion-button clear color="dark" (click)="delete(elem)">
         <ion-icon name="close-circle"></ion-icon>
       </button>
-    </ion-chip>
-  </ion-toolbar>
+        </ion-chip>
+    </ion-toolbar>
 
-  <ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-label>Fund Type</ion-label>
+            <ion-select [(ngModel)]="selectedFundType" cancelText="Nah" okText="Okay!" (ionChange)="getFundHousesforFundType(selectedFundType)">
+                <ion-option *ngFor="let fundType of fundTypes">
+                    <p>
+                        {{fundType.trim()}}
+                    </p>
+                </ion-option>
+            </ion-select>
+        </ion-item>
 
-    <ion-item>
-      <ion-label>Fund Type</ion-label>
-      <ion-select [(ngModel)]="selectedFundType" cancelText="Nah" okText="Okay!" (ionChange)="getFundHousesforFundType(selectedFundType)">
-        <ion-option *ngFor="let fundType of fundTypes">
-          <p>
-            {{fundType.trim()}}
-          </p>
-        </ion-option>
-      </ion-select>
-    </ion-item>
+        <ion-item>
+            <ion-label>Fund House</ion-label>
+            <ion-select [(ngModel)]="selectedFundHouses" multiple="true" cancelText="Nah" okText="Okay!" (ionChange)="getFundsList(selectedFundType,selectedFundHouses.join())">
+                <ion-option *ngFor=" let fundHouse of fundHouses ">
+                    <p>
+                        {{fundHouse.trim()}}
+                    </p>
+                </ion-option>
+            </ion-select>
+        </ion-item>
 
-    <ion-item >
-      <ion-label>Fund House</ion-label>
-      <ion-select [(ngModel)]="selectedFundHouses" multiple="true" cancelText="Nah" okText="Okay!">
-        <ion-option *ngFor="let fundHouse of fundHouses" >
-          <p>
-          {{fundHouse.trim()}}
-          </p>
-      </ion-option>
-      </ion-select>
-    </ion-item>
+    </ion-list>
 
-  </ion-list>
+    <ion-list>
+        <ion-item button *ngFor="let fund of funds" (click)="showfundDetails(fund.keyStr)" text-wrap>
+            {{fund.valStr}}
+        </ion-item>
+    </ion-list>
 
 </ion-content>
